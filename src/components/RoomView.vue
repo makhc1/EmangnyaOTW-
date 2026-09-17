@@ -51,15 +51,31 @@ const initRoom = async () => {
     await supabase.from('rooms').insert([{ id: props.roomId }])
   }
 
-  const { error: memberErr } = await supabase
+  // 1. Cek apakah user udah ada di tabel members
+  const { data: existingUser } = await supabase
     .from('members')
-    .upsert([{ 
+    .select('id, lat, lng')
+    .eq('id', props.user.id)
+    .maybeSingle()
+
+  if (existingUser) {
+    // Kalau udah ada, update data doang (JANGAN TIMPA LAT & LNG)
+    await supabase.from('members').update({ 
+      room_id: props.roomId, 
+      nickname: props.user.name, 
+      avatar_url: props.user.avatar,
+      last_updated: new Date().toISOString()
+    }).eq('id', props.user.id)
+  } else {
+    // Kalau belum ada, insert baru
+    await supabase.from('members').insert([{ 
       id: props.user.id, 
       room_id: props.roomId, 
       nickname: props.user.name, 
       avatar_url: props.user.avatar,
       last_updated: new Date().toISOString()
     }])
+  }
 
   const { data: initialMembers } = await supabase
     .from('members')
@@ -178,9 +194,12 @@ const startTracking = () => {
       },
       (error) => {
         console.warn("Geolocation error:", error)
+        showToast("GPS lu mati bos, atau browser nggak dikasih izin akses lokasi!", "error")
       },
       { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
     )
+  } else {
+    showToast("Browser lu nggak support GPS bos!", "error")
   }
 }
 
