@@ -3,7 +3,9 @@ import { ref, onMounted } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import LobbyView from './components/LobbyView.vue'
 import RoomView from './components/RoomView.vue'
+import ToastNotification from './components/ToastNotification.vue'
 import { supabase } from './supabase'
+import { showToast } from './toast'
 
 // App State
 const view = ref('lobby') // 'lobby' | 'map'
@@ -29,7 +31,7 @@ const handleJoinRoom = async ({ roomId, nickname, isCreate }) => {
       .maybeSingle()
 
     if (!roomData) {
-      alert(`PIN Salah Bos! Room '${roomId}' nggak ketemu. Cek lagi deh link atau PIN-nya.`)
+      showToast(`PIN Salah Bos! Room '${roomId}' nggak ketemu. Cek lagi deh link atau PIN-nya.`, 'error')
       return
     }
 
@@ -42,7 +44,7 @@ const handleJoinRoom = async ({ roomId, nickname, isCreate }) => {
       .maybeSingle()
       
     if (nameData) {
-      alert(`Nama '${nickname}' udah ada yang pake di room ini bos, cari nama lain!`)
+      showToast(`Nama '${nickname}' udah ada yang pake di room ini bos, cari nama lain!`, 'error')
       return
     }
   }
@@ -77,6 +79,9 @@ const handleLeaveRoom = () => {
 
 <template>
   <div class="h-[100dvh] w-full bg-[#f4f4f0] relative overflow-hidden flex flex-col md:flex-row text-black font-sans selection:bg-pink-400 selection:text-white">
+    <!-- Custom Toast UI -->
+    <ToastNotification />
+
     <!-- Router alternative using conditional rendering -->
     <LobbyView 
       v-if="view === 'lobby'" 

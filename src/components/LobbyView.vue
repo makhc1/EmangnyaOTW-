@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { Bike, Users, KeyRound, ArrowRight } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
+import { showToast } from '../toast'
 
 const props = defineProps({
   initialRoomId: String
@@ -21,14 +22,14 @@ onMounted(() => {
 
 const joinRoom = (isCreate = false) => {
   if (!nickname.value.trim()) {
-    alert("Isi nama/nickname dulu bos!")
+    showToast("Isi nama/nickname dulu bos!", 'error')
     return
   }
   
   if (isCreate) {
     roomId.value = uuidv4()
   } else if (!roomId.value.trim()) {
-    alert("Isi PIN Room dulu!")
+    showToast("Isi PIN Room dulu!", 'error')
     return
   }
 

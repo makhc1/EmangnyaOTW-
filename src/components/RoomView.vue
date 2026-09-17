@@ -4,6 +4,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Bike, Crosshair, ArrowUpRight, Share2, LogOut } from 'lucide-vue-next'
 import { supabase } from '../supabase'
+import { showToast } from '../toast'
 
 const props = defineProps({
   roomId: String,
@@ -27,7 +28,7 @@ let touchStartY = 0
 const copyShareLink = () => {
   const link = `${window.location.origin}${window.location.pathname}?room=${props.roomId}`
   navigator.clipboard.writeText(link)
-  alert('Share link copied to clipboard!')
+  showToast('Link udah di-copy! Kasih ke temen lu cepet.', 'success')
 }
 
 const leaveRoom = () => {
