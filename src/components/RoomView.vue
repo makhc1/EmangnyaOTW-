@@ -280,7 +280,7 @@ onUnmounted(() => {
                <Bike class="w-5 h-5 text-black" stroke-width="2.5" />
             </div>
             <div class="flex flex-col">
-               <h1 class="text-[11px] font-black tracking-widest text-black uppercase">Room Pin</h1>
+               <h1 class="text-[11px] font-black tracking-widest text-black uppercase">PIN Room</h1>
                <span class="text-xs font-bold text-black/60 font-mono">{{ roomId.substring(0,8) }}...</span>
             </div>
           </div>
@@ -290,7 +290,7 @@ onUnmounted(() => {
             </button>
             <button @click="leaveRoom" class="px-3 h-10 rounded-xl bg-[#FF458A] border-2 border-black flex items-center gap-2 hover:-translate-y-1 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all">
               <LogOut class="w-4 h-4 text-white" stroke-width="2.5" />
-              <span class="text-[11px] font-black uppercase tracking-widest text-white">Exit</span>
+              <span class="text-[11px] font-black uppercase tracking-widest text-white">Cabut</span>
             </button>
           </div>
         </div>
@@ -310,13 +310,13 @@ onUnmounted(() => {
         <div class="md:hidden w-full h-12 flex flex-col items-center justify-center shrink-0 cursor-pointer group bg-[#FFB800] rounded-t-[calc(1.5rem-4px)] border-b-4 border-black" @click="isChatExpanded = !isChatExpanded">
           <div class="w-12 h-2 bg-black rounded-full transition-transform group-active:scale-x-125"></div>
           <span class="text-[10px] font-black uppercase tracking-[0.2em] text-black mt-1">
-             {{ isChatExpanded ? 'Swipe Down' : 'Live Chat' }}
+             {{ isChatExpanded ? 'Tutup Chat' : 'Obrolan' }}
           </span>
         </div>
 
         <!-- Desktop Only: Live Pulse Label -->
         <div class="hidden md:flex px-2 items-center gap-2 pointer-events-auto mb-2">
-           <span class="px-3 py-1 bg-[#FF458A] border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-[11px] uppercase tracking-widest font-black text-white rotate-2">Chat Feed</span>
+           <span class="px-3 py-1 bg-[#FF458A] border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-[11px] uppercase tracking-widest font-black text-white rotate-2">Tongkrongan</span>
         </div>
 
         <!-- Feed Container -->
@@ -346,7 +346,7 @@ onUnmounted(() => {
 
             <!-- Empty State -->
             <div v-if="feed.length === 0" class="flex flex-col items-center justify-center py-6">
-               <span class="text-sm text-black/50 font-bold bg-gray-100 border-2 border-black/20 border-dashed px-4 py-2 rounded-lg -rotate-2">No messages yet.</span>
+               <span class="text-sm text-black/50 font-bold bg-gray-100 border-2 border-black/20 border-dashed px-4 py-2 rounded-lg -rotate-2">Belum ada chat.</span>
             </div>
 
           </div>
@@ -362,11 +362,11 @@ onUnmounted(() => {
               v-model="statusMessage"
               @keyup.enter="updateStatus"
               type="text" 
-              placeholder="Send message..." 
+              placeholder="Ketik pesan..." 
               class="flex-1 bg-gray-100 border-2 border-black rounded-lg h-12 outline-none px-3 text-sm font-bold text-black placeholder-black/30 focus:bg-white transition-colors"
             />
             <button @click="updateStatus" class="group relative z-10 flex items-center gap-2 px-4 h-12 rounded-lg bg-[#00E5FF] border-2 border-black text-black hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all">
-              <span class="text-sm font-black uppercase">Send</span>
+              <span class="text-sm font-black uppercase">Kirim</span>
               <ArrowUpRight class="w-4 h-4 text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" stroke-width="3" />
             </button>
           </div>
