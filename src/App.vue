@@ -7,19 +7,14 @@ import ToastNotification from './components/ToastNotification.vue'
 import { supabase } from './supabase'
 import { showToast } from './toast'
 
+// Check URL for shared room code synchronously
+const urlParams = new URLSearchParams(window.location.search)
+const sharedRoom = urlParams.get('room') || ''
+
 // App State
 const view = ref('lobby') // 'lobby' | 'map'
-const currentRoomId = ref('')
+const currentRoomId = ref(sharedRoom)
 const currentUser = ref(null)
-
-onMounted(() => {
-  // Check URL for shared room code
-  const urlParams = new URLSearchParams(window.location.search)
-  const sharedRoom = urlParams.get('room')
-  if (sharedRoom) {
-    currentRoomId.value = sharedRoom
-  }
-})
 
 const handleJoinRoom = async ({ roomId, nickname, isCreate }) => {
   if (!isCreate) {
