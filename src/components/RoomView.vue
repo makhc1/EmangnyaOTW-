@@ -138,26 +138,40 @@ const setupRealtime = () => {
 // -----------------------
 // MAP & GEOLOCATION
 // -----------------------
+const escapeHtml = (unsafe) => {
+  if (!unsafe) return ''
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
+}
+
 const updateMapMarkers = () => {
   if (!map.value) return
 
   members.value.forEach(m => {
     if (!m.lat || !m.lng) return
 
+    const safeAvatar = escapeHtml(m.avatar_url)
     const isMe = m.id === props.user.id
     const avatarHtml = isMe 
       ? `
       <div class="relative group z-50">
         <div class="absolute -bottom-2 -right-2 w-12 h-12 bg-black rounded-xl"></div>
         <div class="relative w-12 h-12 rounded-xl border-4 border-black bg-[#FFB800] overflow-hidden flex items-center justify-center p-0.5 animate-bounce">
-           <img src="${m.avatar_url}" class="w-full h-full object-cover bg-white" />
+           <img src="${safeAvatar}" class="w-full h-full object-cover bg-white" />
         </div>
         <div class="absolute -top-3 -right-3 bg-[#FF458A] text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full border-2 border-black rotate-12">YOU</div>
       </div>
       `
       : `
-      <div class="w-10 h-10 rounded-xl border-2 border-black bg-[#00E5FF] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden flex items-center justify-center p-0.5 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
-        <img src="${m.avatar_url}" class="w-full h-full object-cover bg-white" />
+      <div class="relative group z-40 transition-transform hover:scale-110 hover:z-50">
+        <div class="absolute -bottom-1 -right-1 w-10 h-10 bg-black rounded-xl"></div>
+        <div class="relative w-10 h-10 rounded-xl border-4 border-black bg-[#00E5FF] overflow-hidden flex items-center justify-center p-0.5">
+           <img src="${safeAvatar}" class="w-full h-full object-cover bg-white" />
+        </div>
       </div>
       `
 

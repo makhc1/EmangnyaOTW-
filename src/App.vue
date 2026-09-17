@@ -59,7 +59,7 @@ const handleJoinRoom = async ({ roomId, nickname, isCreate }) => {
   currentUser.value = {
     id: userId,
     name: nickname,
-    avatar: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${nickname}&backgroundColor=b6e3f4,c0aede,d1d4f9`
+    avatar: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${encodeURIComponent(nickname)}&backgroundColor=b6e3f4,c0aede,d1d4f9`
   }
   
   view.value = 'map'
