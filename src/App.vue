@@ -20,16 +20,28 @@ onMounted(() => {
 })
 
 const handleJoinRoom = async ({ roomId, nickname, isCreate }) => {
-  // Cek kalau nama udah dipakai (khusus pas join room orang lain)
   if (!isCreate) {
-    const { data } = await supabase
+    // 1. Validasi PIN: Pastikan room-nya beneran ada di database
+    const { data: roomData } = await supabase
+      .from('rooms')
+      .select('id')
+      .eq('id', roomId)
+      .maybeSingle()
+
+    if (!roomData) {
+      alert(`PIN Salah Bos! Room '${roomId}' nggak ketemu. Cek lagi deh link atau PIN-nya.`)
+      return
+    }
+
+    // 2. Cek kalau nama udah dipakai di room tersebut
+    const { data: nameData } = await supabase
       .from('members')
       .select('id')
       .eq('room_id', roomId)
       .ilike('nickname', nickname)
       .maybeSingle()
       
-    if (data) {
+    if (nameData) {
       alert(`Nama '${nickname}' udah ada yang pake di room ini bos, cari nama lain!`)
       return
     }
