@@ -78,34 +78,44 @@ const joinRoom = (isCreate = false) => {
           </div>
         </div>
 
-        <!-- Join Existing Room -->
-        <div class="space-y-2">
-           <label class="text-sm font-bold uppercase tracking-wider text-black flex items-center gap-2">
-             <span class="w-2 h-2 bg-[#00E5FF] rounded-full border border-black"></span> Join Room
-          </label>
-          <div class="flex gap-2">
-            <div class="flex-1 h-14 bg-[#f4f4f0] border-4 border-black rounded-xl flex items-center px-4 focus-within:-translate-y-1 focus-within:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
-              <KeyRound class="w-5 h-5 text-black mr-3 shrink-0" stroke-width="2" />
-              <input v-model="roomId" @keyup.enter="joinRoom()" type="text" placeholder="Paste link / PIN" class="flex-1 w-full bg-transparent border-none outline-none text-base font-bold text-black placeholder-black/30" />
+        <template v-if="!props.initialRoomId">
+          <!-- Join Existing Room -->
+          <div class="space-y-2">
+             <label class="text-sm font-bold uppercase tracking-wider text-black flex items-center gap-2">
+               <span class="w-2 h-2 bg-[#00E5FF] rounded-full border border-black"></span> Join Room
+            </label>
+            <div class="flex gap-2">
+              <div class="flex-1 h-14 bg-[#f4f4f0] border-4 border-black rounded-xl flex items-center px-4 focus-within:-translate-y-1 focus-within:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+                <KeyRound class="w-5 h-5 text-black mr-3 shrink-0" stroke-width="2" />
+                <input v-model="roomId" @keyup.enter="joinRoom()" type="text" placeholder="Paste link / PIN" class="flex-1 w-full bg-transparent border-none outline-none text-base font-bold text-black placeholder-black/30" />
+              </div>
+              <button v-if="roomId" @click="joinRoom()" class="h-14 px-5 border-4 border-black rounded-xl bg-[#00E5FF] text-black font-black text-lg hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center">
+                GO
+              </button>
             </div>
-            <button v-if="roomId" @click="joinRoom()" class="h-14 px-5 border-4 border-black rounded-xl bg-[#00E5FF] text-black font-black text-lg hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center">
-              GO
-            </button>
           </div>
-        </div>
 
-        <div class="relative py-2 flex items-center justify-center">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t-4 border-black border-dashed"></div>
+          <div class="relative py-2 flex items-center justify-center">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t-4 border-black border-dashed"></div>
+            </div>
+            <span class="relative bg-white px-4 text-xs font-black uppercase text-black">OR</span>
           </div>
-          <span class="relative bg-white px-4 text-xs font-black uppercase text-black">OR</span>
-        </div>
 
-        <!-- Create Room Button -->
-        <button @click="joinRoom(true)" class="group w-full h-16 border-4 border-black rounded-xl bg-[#FFB800] text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-3">
-          <span class="text-lg font-black uppercase tracking-wide">Create New Room</span>
-          <ArrowRight class="w-6 h-6 text-black group-hover:translate-x-1 transition-transform" stroke-width="3" />
-        </button>
+          <!-- Create Room Button -->
+          <button @click="joinRoom(true)" class="group w-full h-16 border-4 border-black rounded-xl bg-[#FFB800] text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-3">
+            <span class="text-lg font-black uppercase tracking-wide">Create New Room</span>
+            <ArrowRight class="w-6 h-6 text-black group-hover:translate-x-1 transition-transform" stroke-width="3" />
+          </button>
+        </template>
+        
+        <template v-else>
+          <!-- Invited User Mode -->
+          <button @click="joinRoom()" class="group w-full h-16 border-4 border-black rounded-xl bg-[#00E5FF] text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-3 mt-2">
+            <span class="text-lg font-black uppercase tracking-wide">Join The Room</span>
+            <ArrowRight class="w-6 h-6 text-black group-hover:translate-x-1 transition-transform" stroke-width="3" />
+          </button>
+        </template>
 
       </div>
     </div>
