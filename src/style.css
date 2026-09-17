@@ -20,13 +20,7 @@ html, body, #app {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #050505;
-}
-
-/* Leaflet Dark Mode Tweaks */
-.leaflet-container {
-  background: #050505 !important;
-  font-family: inherit !important;
+  background-color: #f4f4f0;
 }
 
 /* Remove default Leaflet controls if any exist */

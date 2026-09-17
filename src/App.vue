@@ -50,7 +50,7 @@ const handleJoinRoom = async ({ roomId, nickname, isCreate }) => {
   currentUser.value = {
     id: userId,
     name: nickname,
-    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${nickname}&backgroundColor=transparent`
+    avatar: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${nickname}&backgroundColor=b6e3f4,c0aede,d1d4f9`
   }
   
   view.value = 'map'
@@ -64,11 +64,7 @@ const handleLeaveRoom = () => {
 </script>
 
 <template>
-  <div class="h-[100dvh] w-full bg-[#050505] relative overflow-hidden flex flex-col md:flex-row text-white font-sans">
-    <!-- Ethereal Noise Overlay (Global) -->
-    <div class="pointer-events-none absolute inset-0 z-[100] opacity-[0.03] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
-
-    
+  <div class="h-[100dvh] w-full bg-[#f4f4f0] relative overflow-hidden flex flex-col md:flex-row text-black font-sans selection:bg-pink-400 selection:text-white">
     <!-- Router alternative using conditional rendering -->
     <LobbyView 
       v-if="view === 'lobby'" 

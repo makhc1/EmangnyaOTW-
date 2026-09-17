@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Radar, Users, KeyRound, ArrowUpRight } from 'lucide-vue-next'
-
+import { Bike, Users, KeyRound, ArrowRight } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps({
@@ -42,71 +41,72 @@ const joinRoom = (isCreate = false) => {
 </script>
 
 <template>
-  <div class="relative z-10 w-full h-full flex flex-col items-center justify-center p-4">
-    <!-- Background Ambient Glow -->
-    <div class="absolute inset-0 z-0 flex items-center justify-center opacity-30 pointer-events-none">
-      <div class="w-[40vw] h-[40vw] bg-white rounded-full blur-[120px] opacity-10 mix-blend-screen"></div>
-    </div>
+  <!-- Decorative Background Shapes -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <!-- Circle -->
+    <div class="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-[#FF458A] border-[8px] border-black opacity-20 rotate-12"></div>
+    <!-- Star / Polygon -->
+    <div class="absolute bottom-[5%] left-[-10%] w-[50vw] h-[50vw] bg-[#00E5FF] border-[8px] border-black opacity-20 transform -rotate-12" style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>
+  </div>
 
-    <div class="relative z-10 w-full max-w-sm transform transition-all duration-fluid ease-fluid"
-         :class="isLoaded ? 'translate-y-0 opacity-100 blur-0' : 'translate-y-12 opacity-0 blur-md'">
+  <div class="relative z-10 w-full h-full flex flex-col items-center justify-center p-6">
+    <div class="w-full max-w-sm transform transition-all duration-500"
+         :class="isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'">
       
       <!-- Branding -->
-      <div class="flex flex-col items-center gap-4 mb-12">
-        <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center ring-1 ring-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] relative overflow-hidden group">
-           <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-           <Radar class="w-8 h-8 text-white/90 relative z-10" stroke-width="1" />
+      <div class="flex flex-col items-center gap-2 mb-10">
+        <div class="w-20 h-20 rounded-2xl bg-[#FFB800] border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center rotate-3 hover:rotate-6 transition-transform">
+           <Bike class="w-10 h-10 text-black" stroke-width="2.5" />
         </div>
-        <div class="text-center">
-          <h1 class="text-2xl font-semibold tracking-[0.2em] text-white uppercase mb-1">Radar Nongki</h1>
-          <p class="text-sm font-light text-white/40 tracking-wide">Sync your circle. Real-time.</p>
+        <div class="text-center mt-4">
+          <h1 class="text-4xl font-black tracking-tight text-black uppercase" style="text-shadow: 2px 2px 0px #FF458A, 4px 4px 0px #000;">EMANGNYA OTW?</h1>
+          <p class="text-xs font-bold text-black mt-2 bg-[#00E5FF] inline-block px-3 py-1.5 border-2 border-black -rotate-2">Pantau temen lu yang ngakunya udah di jalan.</p>
         </div>
       </div>
 
-      <!-- Double Bezel Form Panel -->
-      <div class="p-[5px] rounded-[2.5rem] bg-white/[0.02] ring-1 ring-white/10 backdrop-blur-3xl shadow-2xl">
-        <div class="p-6 rounded-[calc(2.5rem-5px)] bg-[#0a0a0a]/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] flex flex-col gap-6">
-          
-          <!-- Nickname Input -->
-          <div class="space-y-2">
-            <label class="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50 ml-2">Who are you?</label>
-            <div class="h-12 rounded-2xl bg-white/5 ring-1 ring-white/10 flex items-center px-4 focus-within:ring-white/30 transition-all">
-              <Users class="w-4 h-4 text-white/40 mr-3 shrink-0" stroke-width="1.5" />
-              <input v-model="nickname" @keyup.enter="roomId ? joinRoom() : joinRoom(true)" type="text" placeholder="Enter nickname..." class="flex-1 bg-transparent border-none outline-none text-[15px] font-light text-white placeholder-white/20" />
-            </div>
+      <!-- Main Panel -->
+      <div class="bg-white border-4 border-black p-6 rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-6 relative z-10">
+        
+        <!-- Nickname Input -->
+        <div class="space-y-2">
+          <label class="text-sm font-bold uppercase tracking-wider text-black flex items-center gap-2">
+             <span class="w-2 h-2 bg-[#FF458A] rounded-full border border-black"></span> Who are you?
+          </label>
+          <div class="h-14 bg-[#f4f4f0] border-4 border-black rounded-xl flex items-center px-4 focus-within:-translate-y-1 focus-within:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+            <Users class="w-5 h-5 text-black mr-3 shrink-0" stroke-width="2" />
+            <input v-model="nickname" @keyup.enter="roomId ? joinRoom() : joinRoom(true)" type="text" placeholder="Enter nickname..." class="flex-1 bg-transparent border-none outline-none text-lg font-bold text-black placeholder-black/30" />
           </div>
+        </div>
 
-          <div class="w-full h-[1px] bg-white/5"></div>
-
-          <!-- Action Area -->
-          <div class="space-y-4">
-            <!-- Join Existing Room -->
-            <div class="flex gap-2">
-              <div class="flex-1 h-12 rounded-2xl bg-white/5 ring-1 ring-white/10 flex items-center px-4 focus-within:ring-white/30 transition-all">
-                <KeyRound class="w-4 h-4 text-white/40 mr-3 shrink-0" stroke-width="1.5" />
-                <input v-model="roomId" @keyup.enter="joinRoom()" type="text" placeholder="Room PIN (Optional)" class="flex-1 bg-transparent border-none outline-none text-[15px] font-light uppercase text-white placeholder-white/20" />
-              </div>
-              <button v-if="roomId" @click="joinRoom()" class="h-12 px-6 rounded-2xl bg-white text-black font-semibold text-sm hover:bg-gray-100 transition-all active:scale-[0.96]">
-                Join
-              </button>
+        <!-- Join Existing Room -->
+        <div class="space-y-2">
+           <label class="text-sm font-bold uppercase tracking-wider text-black flex items-center gap-2">
+             <span class="w-2 h-2 bg-[#00E5FF] rounded-full border border-black"></span> Join Room
+          </label>
+          <div class="flex gap-2">
+            <div class="flex-1 h-14 bg-[#f4f4f0] border-4 border-black rounded-xl flex items-center px-4 focus-within:-translate-y-1 focus-within:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+              <KeyRound class="w-5 h-5 text-black mr-3 shrink-0" stroke-width="2" />
+              <input v-model="roomId" @keyup.enter="joinRoom()" type="text" placeholder="Paste link / PIN" class="flex-1 w-full bg-transparent border-none outline-none text-base font-bold text-black placeholder-black/30" />
             </div>
-
-            <div class="text-center text-[10px] font-medium text-white/30 uppercase tracking-[0.1em] flex items-center gap-2">
-              <span class="flex-1 h-[1px] bg-white/5"></span>
-              <span>OR</span>
-              <span class="flex-1 h-[1px] bg-white/5"></span>
-            </div>
-
-            <!-- Create Room Button -->
-            <button @click="joinRoom(true)" class="group w-full h-12 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] ring-1 ring-white/10 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-              <span class="text-[13px] font-semibold tracking-wide text-white/80">Create New Room</span>
-              <div class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center transition-transform duration-500 ease-fluid group-hover:translate-x-1">
-                <ArrowUpRight class="w-3 h-3 text-white" stroke-width="2" />
-              </div>
+            <button v-if="roomId" @click="joinRoom()" class="h-14 px-5 border-4 border-black rounded-xl bg-[#00E5FF] text-black font-black text-lg hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center">
+              GO
             </button>
           </div>
-
         </div>
+
+        <div class="relative py-2 flex items-center justify-center">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t-4 border-black border-dashed"></div>
+          </div>
+          <span class="relative bg-white px-4 text-xs font-black uppercase text-black">OR</span>
+        </div>
+
+        <!-- Create Room Button -->
+        <button @click="joinRoom(true)" class="group w-full h-16 border-4 border-black rounded-xl bg-[#FFB800] text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-3">
+          <span class="text-lg font-black uppercase tracking-wide">Create New Room</span>
+          <ArrowRight class="w-6 h-6 text-black group-hover:translate-x-1 transition-transform" stroke-width="3" />
+        </button>
+
       </div>
     </div>
   </div>
